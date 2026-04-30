@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head('Error')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<div class="container text-center" style="max-width: 480px; padding-top: 80px;">
+    <h1 class="display-1 fw-bold text-muted" th:text="${status}">Error</h1>
+    <p class="fs-5 mb-4" th:text="${message}">An error occurred.</p>
+    <a th:href="@{/notes}" class="btn btn-primary">Back to notes</a>
+</div>
+
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

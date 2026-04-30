@@ -1,6 +1,7 @@
 package com.notetaking.service;
 
 import com.notetaking.domain.Note;
+import com.notetaking.exception.NoteNotFoundException;
 import com.notetaking.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note findById(Long id) {
         return noteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Note not found: " + id));
+                .orElseThrow(() -> new NoteNotFoundException(id));
     }
 
     @Override

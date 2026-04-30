@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${noteId != null ? 'Edit note' : 'New note'})}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 720px;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 th:text="${noteId != null ? 'Edit note' : 'New note'}" class="mb-0">Note</h4>
+        <span id="sync-status" class="text-muted small"></span>
+    </div>
+
+    <form th:action="${noteId != null} ? @{/notes/{id}(id=${noteId})} : @{/notes}"
+          th:object="${noteForm}"
+          method="post"
+          th:data-note-id="${noteId}">
+
+        <div class="mb-3">
+            <input type="text"
+                   th:field="*{title}"
+                   class="form-control form-control-lg"
+                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
+                   placeholder="Title">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <div class="mb-4">
+            <textarea th:field="*{content}"
+                      class="form-control"
+                      rows="14"
+                      placeholder="Write your note here..."></textarea>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/notes}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{layout :: scripts}"></div>
+<script th:if="${noteId != null}" th:src="@{/js/sync.js}"></script>
+</body>
+</html>
